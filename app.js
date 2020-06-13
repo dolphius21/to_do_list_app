@@ -5,13 +5,13 @@ const clearBtn = document.querySelector('.clear-btn');
 
 
 // CLEAR INPUT
-const clearInput = () => {
+taskInput.addEventListener('click', () => {
   taskInput.placeholder = '';
-}
+});
 
 
 // DISPLAY TASKS FROM LOCAL STORAGE
-const displayTasks = () => {
+document.addEventListener('DOMContentLoaded', () => {
   let storedTasks;
   // get stored tasks data from local storage
   if(localStorage.getItem('storedTasks') === null) {
@@ -29,13 +29,13 @@ const displayTasks = () => {
     // create remove-item btn
     const a = document.createElement('a');
     a.className = 'remove-item';
-    a.appendChild(document.createTextNode('DONE'));
+    a.innerHTML = '<i class="fas fa-check-circle"></i>';
     li.appendChild(a);
   
     // append li to taskList
     taskList.appendChild(li);
   });
-};
+});
 
 
 // ADD TASK TO LOCAL STORAGE
@@ -55,7 +55,7 @@ const addTaskToLocalStorage = (task) => {
 
 
 // ADD TASK
-const addTask = (e) => {
+form.addEventListener('submit', (e) => {
   // Check if there's value
   if(taskInput.value === '') {
     alert('Add a task.');
@@ -68,7 +68,7 @@ const addTask = (e) => {
   // create remove-item btn
   const a = document.createElement('a');
   a.className = 'remove-item';
-  a.appendChild(document.createTextNode('DONE'));
+  a.innerHTML = '<i class="fas fa-check-circle"></i>';
   li.appendChild(a);
  
   // append li to taskList
@@ -81,7 +81,7 @@ const addTask = (e) => {
   taskInput.value = '';
 
   e.preventDefault();
-};
+});
 
 
 // REMOVE TASK FROM LOCAL STORAGE
@@ -105,37 +105,35 @@ const removeTaskFromLocalStorage = (taskItem) => {
 
 
 // REMOVE TASK
-const removeTask = (e) => {
+taskList.addEventListener('click', (e) => {
   // Check if target has remove item class
-  if(e.target.className === 'remove-item') {
-    e.target.parentElement.style.background = '#E8F9F1';
+  console.log(e.target.className);
+  if(e.target.parentElement.className === 'remove-item') {
+    e.target.parentElement.parentElement.style.background = '#E8F9F1';
     setTimeout(() => {
-      e.target.parentElement.remove();
+      e.target.parentElement.parentElement.remove();
     }, 300)
 
     // call function
-    removeTaskFromLocalStorage(e.target.parentElement);
-    console.log(e.target.parentElement);
+    removeTaskFromLocalStorage(e.target.parentElement.parentElement);
   }
-};
+});
+
+
+// CLEAR TASK FROM LOCAL STORAGE
+const clearTaskFromLocalStorage = () => {
+  localStorage.clear();
+}
 
 
 // CLEAR TASK
-const clearTasks = (e) => {
+clearBtn.addEventListener('click', (e) => {
   if(confirm('Are you sure?')) {
     while (taskList.firstChild) {
       taskList.removeChild(taskList.firstChild)
     }
-  } 
-};
+  }
 
-
-// LOAD ALL EVENT LISTENERS
-const loadEventListeners = () => {
-  document.addEventListener('DOMContentLoaded', displayTasks);
-  taskInput.addEventListener('click', clearInput);
-  form.addEventListener('submit', addTask);
-  taskList.addEventListener('click', removeTask);
-  clearBtn.addEventListener('click', clearTasks);
-};
-loadEventListeners();
+  // call function
+  clearTaskFromLocalStorage()
+});
