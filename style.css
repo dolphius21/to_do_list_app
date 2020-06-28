@@ -10,24 +10,21 @@
 body {
   font-family: 'Muli', sans-serif;
   color: #fff;
+  background: linear-gradient(
+            rgba(2, 14, 24, 0.6), 
+            rgba(2, 14, 24, 0.6)),
+              url('https://picsum.photos/1920/1080/?blur=1') no-repeat center/cover;
 }
 
 .container {
   max-width: 1000px;
+  min-height: 100vh;
   margin: 0 auto;
   height: inherit;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 1rem;
-}
-
-.background-container {
-  height: 100vh;
-  background: linear-gradient(
-            rgba(2, 14, 24, 0.6), 
-            rgba(2, 14, 24, 0.6)),
-              url('https://picsum.photos/1920/1080/?blur=1') no-repeat center/cover;
 }
 
 .form-container {

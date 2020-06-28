@@ -31,6 +31,8 @@ const greeting =() => {
   document.getElementById('greeting').innerHTML = `${greeting}, what's our focus for today?`
 };
 
+
+
 // to clear placeholder from task input
 const clearPlaceholder = () => taskInput.placeholder = '';
 
@@ -113,8 +115,8 @@ const clearTasksFromLocalStorage = () => {
 // to clear all tasks
 const clearTasks = () => {
   if (confirm('Are sure you want to clear all tasks?')) {
-    while (taskList.firstChild) {
-      taskList.removeChild(taskList.firstChild);
+    while (taskList.firstElementChild) {
+      taskList.removeChild(taskList.firstElementChild);
     }
     clearTasksFromLocalStorage();
   }
