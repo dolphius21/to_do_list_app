@@ -25,8 +25,8 @@ body {
 .background-container {
   height: 100vh;
   background: linear-gradient(
-            rgba(29, 31, 42, 0.7), 
-            rgba(29, 31, 42, 0.7)),
+            rgba(2, 14, 24, 0.6), 
+            rgba(2, 14, 24, 0.6)),
               url('https://picsum.photos/1920/1080/?blur=1') no-repeat center/cover;
 }
 
