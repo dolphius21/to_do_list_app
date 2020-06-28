@@ -148,9 +148,9 @@ body {
   }
 
   #greeting {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     margin-bottom: 1rem;
-    line-height: 2rem;
+    line-height: 2.25rem;
   }
   .task-item {
     font-size: 1.25rem;
