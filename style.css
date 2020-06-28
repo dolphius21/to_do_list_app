@@ -76,14 +76,11 @@ body {
 }
 
 
-.list-container {
-  padding: 1rem;
-}
-
 .heading {
   color: #464646;
   font-size: 2rem;
   margin: 1rem 0;
+  padding-top: 1rem;
 }
 
 #task-list {
