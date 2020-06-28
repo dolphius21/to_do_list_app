@@ -4,6 +4,33 @@ const taskInput = document.getElementById('task-input');
 const taskList = document.getElementById('task-list');
 const clearBtn = document.getElementById('clear-btn');
 
+// to display real time clock
+const realTimeClock = () => {
+  const realTimeClock = new Date();
+  let hours = realTimeClock.getHours();
+  let minutes = realTimeClock.getMinutes();
+  let amPm = (hours < 12) ? 'AM' : 'PM';
+  hours = (hours > 12) ? hours - 12 : hours;
+  hours = ('0' + hours).slice(-2);
+  minutes = ('0' + minutes).slice(-2);
+  document.getElementById('clock').innerHTML = `<h2>${hours}:${minutes}<span class="am-pm">${amPm}</span><h2>`;
+}
+
+// display greeting
+const greeting =() => {
+  let greeting;
+  const realTime = new Date();
+  let hours = realTime.getHours();
+  if (hours >= 3 && hours < 10) {
+    greeting = 'Good morning';
+  } else if (hours >= 10 && hours < 18) {
+    greeting = 'Good afternoon';
+  } else {
+    greeting = 'Good evening'
+  }
+  document.getElementById('greeting').innerHTML = `${greeting}, what's our focus for today?`
+};
+
 // to clear placeholder from task input
 const clearPlaceholder = () => taskInput.placeholder = '';
 
@@ -70,7 +97,7 @@ const removeTaskFromLocalStorage = (task) => {
 // to remove task
 const removeTask = (e) => {
   if (e.target.parentElement.className === 'remove-item') {
-    e.target.parentElement.parentElement.style.background = '#E8F9F1';
+    e.target.parentElement.parentElement.style.background = 'rgba(255, 255, 255, 0.3)';
     setTimeout(() => {
       taskList.removeChild(e.target.parentElement.parentElement);
     }, 400);
@@ -95,6 +122,8 @@ const clearTasks = () => {
 
 // to load all event listeners
 const loadAllEventListeners = () => {
+  document.addEventListener('DOMContentLoaded', realTimeClock);
+  document.addEventListener('DOMContentLoaded', greeting);
   taskInput.addEventListener('click', clearPlaceholder);
   taskForm.addEventListener('submit', addTask);
   document.addEventListener('DOMContentLoaded', displayTasksFromLocalStorage);
