@@ -1,134 +1,104 @@
-const form = document.querySelector('#task-form');
-const taskInput = document.querySelector('#task-input');
-const taskList = document.querySelector('.task-list')
-const clearBtn = document.querySelector('.clear-btn');
+// global variables
+const taskForm = document.getElementById('task-form');
+const taskInput = document.getElementById('task-input');
+const taskList = document.getElementById('task-list');
+const clearBtn = document.getElementById('clear-btn');
 
-// CLEAR PLACEHOLDER WHEN CLICKED
-const clearPlaceholder = () => {
-  taskInput.placeholder = '';
-}
+// to clear placeholder from task input
+const clearPlaceholder = () => taskInput.placeholder = '';
 
-// DISPLAY SAVED TASKS FROM LOCAL STORAGE
+// to display all stored tasks from local storage
 const displayTasksFromLocalStorage = () => {
   let storedTasks;
-  // get stored tasks data from local storage
-  if(localStorage.getItem('storedTasks') === null) {
-    storedTasks = []
+  if (localStorage.getItem('storedTasks') === null) {
+    storedTasks = [];
   } else {
     storedTasks = JSON.parse(localStorage.getItem('storedTasks'));
   }
-  // Iterate through the stored data
-  storedTasks.forEach((task) => {
-  // Create list-item
-  const listItem = document.createElement('li');
-  listItem.className = 'list-item';
-  listItem.appendChild(document.createTextNode(task));
-  // Create remove-item 
-  const link = document.createElement('a');
-  link.className = 'remove-item';
-  link.innerHTML = '<i class="fas fa-check-circle"></i>'
-  listItem.appendChild(link);
-  // Append list-item to task-list
-  taskList.appendChild(listItem);
+  storedTasks.forEach(storedTask => {
+    let taskItem = document.createElement('li');
+    taskItem.className = 'task-item';
+    taskItem.innerHTML = `${storedTask}<a class="remove-item"><i class="fas fa-check-circle"></i></a>`;
+    taskList.appendChild(taskItem);
   });
 };
 
-// ADD TASK TO LOCAL STORAGE
+// to add task to local storage
 const addTaskToLocalStorage = (task) => {
   let storedTasks;
-  // get stored tasks data from local storage
-  if(localStorage.getItem('storedTasks') === null) {
-    storedTasks = []
+  if (localStorage.getItem('storedTasks') === null) {
+    storedTasks = [];
   } else {
     storedTasks = JSON.parse(localStorage.getItem('storedTasks'));
   }
-  // add new tasks to the stored tasks
   storedTasks.push(task);
-  // update data in the local storage
-  localStorage.setItem('storedTasks', JSON.stringify(storedTasks));
+  localStorage.setItem('storedTasks', JSON.stringify(storedTasks))
 };
 
-// ADD TASK TO THE LIST
+// to add task
 const addTask = (e) => {
-  if(taskInput.value === '') {
+  if (taskInput.value === '') {
     alert('Please add a task.');
   } else {
-    // Create list-item
-    const listItem = document.createElement('li');
-    listItem.className = 'list-item';
-    listItem.appendChild(document.createTextNode(taskInput.value));
-    // Create remove-item 
-    const link = document.createElement('a');
-    link.className = 'remove-item';
-    link.innerHTML = '<i class="fas fa-check-circle"></i>'
-    listItem.appendChild(link);
-    // Append list-item to task-list
-    taskList.appendChild(listItem);
-    // Add task to local storage
+    let taskItem = document.createElement('li');
+    taskItem.className = 'task-item';
+    taskItem.innerHTML = `${taskInput.value}<a class="remove-item"><i class="fas fa-check-circle"></i></a>`;
+    taskList.appendChild(taskItem);
     addTaskToLocalStorage(taskInput.value);
-    // Clear input
     taskInput.value = '';
-    // Prevent submit default behavior
-    e.preventDefault();
+    taskInput.placeholder = 'New task...'
   }
+  e.preventDefault();
 };
 
-// REMOVE TASK FROM LOCAL STORAGE
+// to remove task from local storage
 const removeTaskFromLocalStorage = (task) => {
   let storedTasks;
-  // check stored tasks data from local storage
-  if(localStorage.getItem('storedTasks') === null) {
-    storedTasks = []
+  if (localStorage.getItem('storedTasks') === null) {
+    storedTasks = [];
   } else {
     storedTasks = JSON.parse(localStorage.getItem('storedTasks'));
   }
-  // iterate on the existing tasks in the local storage and remove the task that matched
-  storedTasks.forEach((currentTask, index) => {
-    if(task.textContent === currentTask) {
+  storedTasks.forEach((storedTask, index) => {
+    if (storedTask === task) {
       storedTasks.splice(index, 1);
     }
   });
-  // update data in the local storage
   localStorage.setItem('storedTasks', JSON.stringify(storedTasks));
 };
 
-// REMOVE TASK FROM THE LIST
+// to remove task
 const removeTask = (e) => {
-  // Check if target has remove item class
-  if(e.target.parentElement.className === 'remove-item') {
+  if (e.target.parentElement.className === 'remove-item') {
     e.target.parentElement.parentElement.style.background = '#E8F9F1';
     setTimeout(() => {
-      e.target.parentElement.parentElement.remove();
-    }, 300)
-
-    // call function
-    removeTaskFromLocalStorage(e.target.parentElement.parentElement);
+      taskList.removeChild(e.target.parentElement.parentElement);
+    }, 400);
+    removeTaskFromLocalStorage(e.target.parentElement.parentElement.textContent);
   }
 };
 
-// CLEAR TASKS FROM LOCAL STORAGE
-const clearTaskFromLocalStorage = () => {
+// to clear all tasks from local storage
+const clearTasksFromLocalStorage = () => {
   localStorage.clear();
 };
 
-// CLEAR TASKS
+// to clear all tasks
 const clearTasks = () => {
-  if(confirm('Are you sure?')) {
+  if (confirm('Are sure you want to clear all tasks?')) {
     while (taskList.firstChild) {
-      taskList.removeChild(taskList.firstChild)
+      taskList.removeChild(taskList.firstChild);
     }
+    clearTasksFromLocalStorage();
   }
-  // call function
-  clearTaskFromLocalStorage()
 };
 
-// LOAD ALL EVENT LISTENERS
+// to load all event listeners
 const loadAllEventListeners = () => {
   taskInput.addEventListener('click', clearPlaceholder);
-  form.addEventListener('submit', addTask);
+  taskForm.addEventListener('submit', addTask);
   document.addEventListener('DOMContentLoaded', displayTasksFromLocalStorage);
   taskList.addEventListener('click', removeTask);
   clearBtn.addEventListener('click', clearTasks);
 };
-
 loadAllEventListeners();
