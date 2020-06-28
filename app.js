@@ -15,6 +15,7 @@ const realTimeClock = () => {
   minutes = ('0' + minutes).slice(-2);
   document.getElementById('clock').innerHTML = `<h2>${hours}:${minutes}<span class="am-pm">${amPm}</span><h2>`;
 }
+realTimeClock();
 
 // display greeting
 const greeting =() => {
@@ -30,7 +31,7 @@ const greeting =() => {
   }
   document.getElementById('greeting').innerHTML = `${greeting}, what's our focus for today?`
 };
-
+greeting();
 
 
 // to clear placeholder from task input
@@ -124,8 +125,6 @@ const clearTasks = () => {
 
 // to load all event listeners
 const loadAllEventListeners = () => {
-  document.addEventListener('DOMContentLoaded', realTimeClock);
-  document.addEventListener('DOMContentLoaded', greeting);
   taskInput.addEventListener('click', clearPlaceholder);
   taskForm.addEventListener('submit', addTask);
   document.addEventListener('DOMContentLoaded', displayTasksFromLocalStorage);

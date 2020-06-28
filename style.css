@@ -126,7 +126,7 @@ body {
   width: 150px;
   font-weight: 600;
   display: block;
-  margin: 0 auto;
+  margin: 3rem auto 0;
 }
 
 #clear-btn:hover {
