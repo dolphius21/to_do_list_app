@@ -22,9 +22,9 @@ const greeting =() => {
   let greeting;
   const realTime = new Date();
   let hours = realTime.getHours();
-  if (hours >= 3 && hours < 10) {
+  if (hours >= 3 && hours < 12) {
     greeting = 'Good morning';
-  } else if (hours >= 10 && hours < 18) {
+  } else if (hours >= 12 && hours < 18) {
     greeting = 'Good afternoon';
   } else {
     greeting = 'Good evening'
