@@ -6,14 +6,15 @@ const clearBtn = document.getElementById('clear-btn');
 
 // to display real time clock
 const realTimeClock = () => {
-  const realTimeClock = new Date();
-  let hours = realTimeClock.getHours();
-  let minutes = realTimeClock.getMinutes();
+  const clock = new Date();
+  let hours = clock.getHours();
+  let minutes = clock.getMinutes();
   let amPm = (hours < 12) ? 'AM' : 'PM';
   hours = (hours > 12) ? hours - 12 : hours;
   hours = ('0' + hours).slice(-2);
   minutes = ('0' + minutes).slice(-2);
   document.getElementById('clock').innerHTML = `<h2>${hours}:${minutes}<span class="am-pm">${amPm}</span><h2>`;
+  const t = setTimeout(realTimeClock, 500);
 }
 realTimeClock();
 
@@ -32,7 +33,6 @@ const greeting =() => {
   document.getElementById('greeting').innerHTML = `${greeting}, what's our focus for today?`
 };
 greeting();
-
 
 // to clear placeholder from task input
 const clearPlaceholder = () => taskInput.placeholder = '';
