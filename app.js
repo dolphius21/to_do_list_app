@@ -4,19 +4,17 @@ const taskInput = document.getElementById('task-input');
 const taskList = document.getElementById('task-list');
 const clearBtn = document.getElementById('clear-btn');
 
-// to display real time clock
 const realTimeClock = () => {
-  const clock = new Date();
-  let hours = clock.getHours();
-  let minutes = clock.getMinutes();
+  const pad = (number) => (number < 10) ? '0' + number : number;
+  const currentTime = new Date();
+  let hours = pad(currentTime.getHours());
+  let minutes = pad(currentTime.getMinutes());
   let amPm = (hours < 12) ? 'AM' : 'PM';
   hours = (hours > 12) ? hours - 12 : hours;
-  hours = ('0' + hours).slice(-2);
-  minutes = ('0' + minutes).slice(-2);
   document.getElementById('clock').innerHTML = `<h2>${hours}:${minutes}<span class="am-pm">${amPm}</span><h2>`;
-  const t = setTimeout(realTimeClock, 500);
-}
+};
 realTimeClock();
+setInterval(realTimeClock, 1000);
 
 // display greeting
 const greeting =() => {
